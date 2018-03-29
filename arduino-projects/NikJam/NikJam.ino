@@ -58,12 +58,15 @@ void loop() {
   {
     ledMatrix.setPixel(timePosition,7);
     int timeDiff = 600 - (analogRead(33)/2);
-    handleButtons(timePosition, timeDiff + 10);
+    handleButtons(timePosition, 10);
 
-    delay(timeDiff);
+    for (int i = 0; i < timeDiff; i += 10)
+    {
+      delay(10);  
+      handleButtons(timePosition, 10);
+    }
 
     //TODO: do something per lit light at timePosition
-    
     
     timePosition = (timePosition + 1) % 32;
 
@@ -116,14 +119,13 @@ void handleButtons(int col, int uTime)
 //Turn off all Leds
 void resetAllLed()
 {
-  for (int i = 0; i < 7; i++)
+  for (int i = 0; i < 32; i++)
   {
     for (int j = 0; j < 7; j++)
     {
       ledSetup[i][j] = false;
     }
   }
-  ledMatrix.clear();
 }
 
 //Set value for led array
